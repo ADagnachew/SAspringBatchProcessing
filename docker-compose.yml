@@ -10,6 +10,7 @@ services:
       - "3307:3306"
   springbatchapp-container:
     image: springboot-docker-container
+    command: sh -c './wait_for_it.sh mysql-standalone-sa:3306 -- java -jar app.jar'
     ports:
       - "9090:9090"
     environment:

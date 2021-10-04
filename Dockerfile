@@ -1,5 +1,7 @@
-FROM adoptopenjdk/openjdk11:jre-11.0.11_9-alpine
+FROM maven:latest
 ARG JAR_FILE=target/*.jar
+WORKDIR /app
 COPY ${JAR_FILE} app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
-EXPOSE 8181
+COPY ./wait_for_it.sh /app/wait_for_it.sh
+RUN chmod +x ./wait_for_it.sh
+CMD ["java","-jar","app.jar"]
