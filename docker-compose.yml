@@ -1,9 +1,9 @@
 version: "3.9"
 services:
-  mysql-standalone:
+  mysql-standalone-sa:
     image: 'mysql:5.7'
     environment:
-      - MYSQL_ROOT_PASSWORD=root@1927
+      - MYSQL_ROOT_PASSWORD=root
       - MYSQL_PASSWORD=root
       - MYSQL_DATABASE=student
     ports:
@@ -13,14 +13,14 @@ services:
     ports:
       - "9090:9090"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-standalone:3306/student?autoReconnect=true&useSSL=false
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-standalone-sa:3306/student?autoReconnect=true&useSSL=false
       SPRING_DATASOURCE_USERNAME: "root"
-      SPRING_DATASOURCE_PASSWORD: "root@1927"
+      SPRING_DATASOURCE_PASSWORD: "root"
     build:
       context: "./"
       dockerfile: "Dockerfile"
     depends_on:
-      - mysql-standalone
+      - mysql-standalone-sa
 
 networks:
   backing-services:
