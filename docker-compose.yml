@@ -21,3 +21,7 @@ services:
       dockerfile: "Dockerfile"
     depends_on:
       - mysql-standalone
+
+networks:
+  backing-services:
+    driver: bridge
