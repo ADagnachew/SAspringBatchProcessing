@@ -35,8 +35,6 @@ public class StudentBatchController {
         this.studentRepository = studentRepository;
     }
 
-    @GetMapping
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public List<Student> startBatch() {
         JobParameters jobParameters = new JobParametersBuilder()
                 .addLong("startAt", System.currentTimeMillis()).toJobParameters();
@@ -48,6 +46,12 @@ public class StudentBatchController {
             e.printStackTrace();
         }
 
+        return studentRepository.findAll();
+    }
+
+    @GetMapping
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    public List<Student> getAllStudent(){
         return studentRepository.findAll();
     }
 }
