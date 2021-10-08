@@ -1,4 +1,6 @@
 package com.example.saspringbatchapplication.controller;
+import com.example.saspringbatchapplication.Repository.StudentRepository;
+import com.example.saspringbatchapplication.model.Student;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersBuilder;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping(path = "/load")
@@ -21,16 +25,19 @@ public class StudentBatchController {
     private JobLauncher jobLauncher;
     private Job job;
 
+
+    private StudentRepository studentRepository;
+
     @Autowired
-    public StudentBatchController(JobLauncher jobLauncher, Job job) {
+    public StudentBatchController(JobLauncher jobLauncher, Job job, StudentRepository studentRepository) {
         this.jobLauncher = jobLauncher;
         this.job = job;
+        this.studentRepository = studentRepository;
     }
-
 
     @GetMapping
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    public void startBatch() {
+    public List<Student> startBatch() {
         JobParameters jobParameters = new JobParametersBuilder()
                 .addLong("startAt", System.currentTimeMillis()).toJobParameters();
         try {
@@ -40,5 +47,7 @@ public class StudentBatchController {
 
             e.printStackTrace();
         }
+
+        return studentRepository.findAll();
     }
 }

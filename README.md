@@ -1,0 +1,4 @@
+- to run the app do "docker-compose up --build" to run the app.
+- using post-man make a POST request to http://localhost:9090/login with the following payload { "username": "admin", "password": "admin" }
+- get the token from the previous request response header.
+- and make a GET request to http://localhost:9090/load to run the spring batch processor.
